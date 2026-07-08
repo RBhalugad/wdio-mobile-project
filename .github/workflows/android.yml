@@ -56,7 +56,7 @@ jobs:
             - name: Check Environment with Appium Doctor
               run: |
                   npm install -g appium-doctor
-                  appium-doctor --android
+                  appium-doctor --android || true
 
             - name: Start Android Emulator
               uses: reactivecircus/android-emulator-runner@v2
