@@ -22,7 +22,7 @@ config.capabilities = [
 
         // ── App ─────────────────────────────────────────────────
         // Option A: local .apk file
-        'appium:app': process.env.ANDROID_APP_PATH || './apps/android.apk',
+        'appium:app': process.env.ANDROID_APP_PATH || './apps/General-Store.apk',
         // Option B: pre-installed app (comment out 'app' above)
         // 'appium:appPackage': 'com.example.app',
         // 'appium:appActivity': '.ui.MainActivity',
