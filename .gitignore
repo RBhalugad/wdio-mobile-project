@@ -1,0 +1,67 @@
+# ─── Dependencies ─────────────────────────────────────────────────────────────
+node_modules/
+
+# ─── Environment / Secrets ────────────────────────────────────────────────────
+.env
+.env.local
+.env.*.local
+
+# ─── TypeScript build output ──────────────────────────────────────────────────
+dist/
+build/
+*.js.map
+*.d.ts.map
+
+# ─── Test artifacts ───────────────────────────────────────────────────────────
+allure-results/
+allure-report/
+screenshots/
+logs/
+*.log
+appium.log
+
+# ─── App binaries (place in apps/ but never commit) ──────────────────────────
+apps/*.apk
+apps/*.ipa
+apps/*.app
+apps/*.aab
+
+# ─── Appium / WebdriverIO ─────────────────────────────────────────────────────
+.appium/
+wdio-*.log
+
+# ─── macOS ────────────────────────────────────────────────────────────────────
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# ─── Windows ──────────────────────────────────────────────────────────────────
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# ─── Linux ────────────────────────────────────────────────────────────────────
+*~
+
+# ─── IDEs & Editors ───────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# ─── npm ──────────────────────────────────────────────────────────────────────
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.npm
+.yarn-integrity
+
+# ─── Coverage ─────────────────────────────────────────────────────────────────
+coverage/
+.nyc_output/

@@ -1,0 +1,71 @@
+name: iOS Tests
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+jobs:
+  ios-tests:
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Appium & drivers
+        run: |
+          npm install -g appium
+          appium driver install xcuitest
+
+      - name: Select Xcode version
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: 'latest-stable'
+
+      - name: Boot iOS Simulator
+        run: |
+          UDID=$(xcrun simctl create "CI_iPhone" "iPhone 16" iOS18.0 2>/dev/null \
+            || xcrun simctl list devices | grep "iPhone 16" | grep -v unavailable \
+            | head -1 | sed 's/.*(\([A-F0-9-]*\)).*/\1/')
+          xcrun simctl boot "$UDID" || true
+          echo "IOS_UDID=$UDID" >> $GITHUB_ENV
+          echo "Booted simulator: $UDID"
+
+      - name: Run iOS tests
+        env:
+          IOS_DEVICE_NAME: iPhone 16
+          IOS_VERSION: '18.0'
+          IOS_UDID: ${{ env.IOS_UDID }}
+          IOS_APP_PATH: ${{ secrets.IOS_APP_PATH }}
+          TEST_USER_EMAIL: ${{ secrets.TEST_USER_EMAIL }}
+          TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD }}
+          LOG_LEVEL: info
+        run: npm run test:ios
+
+      - name: Shutdown simulator
+        if: always()
+        run: xcrun simctl shutdown all
+
+      - name: Upload Allure results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results-ios
+          path: allure-results/
+
+      - name: Upload screenshots on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: failure-screenshots-ios
+          path: screenshots/
