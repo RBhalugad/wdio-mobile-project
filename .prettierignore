@@ -1,0 +1,19 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+build/
+
+# Test artifacts
+allure-results/
+allure-report/
+screenshots/
+logs/
+
+# Lock files (formatting these causes unnecessary diff noise)
+package-lock.json
+yarn.lock
+
+# App binaries
+apps/

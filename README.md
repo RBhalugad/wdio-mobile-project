@@ -37,24 +37,26 @@ wdio-mobile/
 
 ## Prerequisites
 
-| Tool | Version |
-|------|---------|
-| Node.js | ≥ 18 |
-| Java | ≥ 17 (Android) |
-| Android SDK / `adb` | latest |
-| Xcode | ≥ 15 (iOS, macOS only) |
-| Appium | 2.x (installed globally) |
+| Tool                | Version                  |
+| ------------------- | ------------------------ |
+| Node.js             | ≥ 18                     |
+| Java                | ≥ 17 (Android)           |
+| Android SDK / `adb` | latest                   |
+| Xcode               | ≥ 15 (iOS, macOS only)   |
+| Appium              | 2.x (installed globally) |
 
 ---
 
 ## Setup
 
 ### 1. Install dependencies
+
 ```bash
 npm install
 ```
 
 ### 2. Install Appium and drivers
+
 ```bash
 npm install -g appium
 appium driver install uiautomator2   # Android
@@ -62,12 +64,14 @@ appium driver install xcuitest       # iOS (macOS only)
 ```
 
 ### 3. Configure your environment
+
 ```bash
 cp .env.example .env
 # Edit .env with your device details, app path, and test credentials
 ```
 
 ### 4. Add your app binary
+
 Place your `.apk` (Android) or `.app` / `.ipa` (iOS) in the `apps/` directory and update `ANDROID_APP_PATH` / `IOS_APP_PATH` in `.env`.
 
 ---
@@ -107,14 +111,16 @@ npm run allure:report
 const BasePage = require('./base.page');
 
 class SettingsPage extends BasePage {
-  get darkModeToggle() { return $('~dark_mode_toggle'); }
-
-  async enableDarkMode() {
-    const toggle = await this.darkModeToggle;
-    if ((await toggle.getAttribute('value')) === '0') {
-      await toggle.click();
+    get darkModeToggle() {
+        return $('~dark_mode_toggle');
     }
-  }
+
+    async enableDarkMode() {
+        const toggle = await this.darkModeToggle;
+        if ((await toggle.getAttribute('value')) === '0') {
+            await toggle.click();
+        }
+    }
 }
 
 module.exports = new SettingsPage();
@@ -127,10 +133,10 @@ module.exports = new SettingsPage();
 const settingsPage = require('../../pageobjects/settings.page');
 
 describe('Settings', () => {
-  it('should toggle dark mode', async () => {
-    await settingsPage.enableDarkMode();
-    // assert ...
-  });
+    it('should toggle dark mode', async () => {
+        await settingsPage.enableDarkMode();
+        // assert ...
+    });
 });
 ```
 
@@ -140,13 +146,13 @@ describe('Settings', () => {
 const gestures = require('../../helpers/gestures');
 
 it('should swipe carousel', async () => {
-  const carousel = await $('~featured_carousel');
-  await gestures.swipeElementLeft(carousel);
+    const carousel = await $('~featured_carousel');
+    await gestures.swipeElementLeft(carousel);
 });
 
 it('should long-press for context menu', async () => {
-  const item = await $('~list_item_1');
-  await gestures.longPress(item, 1500);
+    const item = await $('~list_item_1');
+    await gestures.longPress(item, 1500);
 });
 ```
 
@@ -154,12 +160,12 @@ it('should long-press for context menu', async () => {
 
 ## Selector Strategy
 
-| Platform | Recommended | Example |
-|----------|------------|---------|
-| Both     | Accessibility ID | `$('~login_button')` |
-| Android  | UIAutomator2 | `$('android=new UiSelector().resourceId("com.app:id/btn")')` |
-| iOS      | Predicate String | `$('-ios predicate string:type == "XCUIElementTypeButton"')` |
-| iOS      | Class Chain | `$('-ios class chain:**/XCUIElementTypeButton[\`label == "Login"\`]')` |
+| Platform | Recommended      | Example                                                                |
+| -------- | ---------------- | ---------------------------------------------------------------------- |
+| Both     | Accessibility ID | `$('~login_button')`                                                   |
+| Android  | UIAutomator2     | `$('android=new UiSelector().resourceId("com.app:id/btn")')`           |
+| iOS      | Predicate String | `$('-ios predicate string:type == "XCUIElementTypeButton"')`           |
+| iOS      | Class Chain      | `$('-ios class chain:**/XCUIElementTypeButton[\`label == "Login"\`]')` |
 
 Use accessibility IDs (`~`) as your default — they work across both platforms when the dev team sets `accessibilityLabel` (iOS) / `contentDescription` (Android).
 
@@ -167,18 +173,18 @@ Use accessibility IDs (`~`) as your default — they work across both platforms 
 
 ## Environment Variables
 
-| Variable | Description |
-|----------|-------------|
-| `ANDROID_DEVICE_NAME` | AVD name or connected device ID |
-| `ANDROID_VERSION` | Platform version (e.g. `14.0`) |
-| `ANDROID_APP_PATH` | Path to `.apk` |
-| `IOS_DEVICE_NAME` | Simulator name or real device name |
-| `IOS_VERSION` | iOS version (e.g. `18.0`) |
-| `IOS_APP_PATH` | Path to `.app` or `.ipa` |
-| `IOS_UDID` | Device UDID (real devices only) |
-| `TEST_USER_EMAIL` | Valid test account email |
-| `TEST_USER_PASSWORD` | Valid test account password |
-| `LOG_LEVEL` | Appium/WebdriverIO log level (`info`, `debug`) |
+| Variable              | Description                                    |
+| --------------------- | ---------------------------------------------- |
+| `ANDROID_DEVICE_NAME` | AVD name or connected device ID                |
+| `ANDROID_VERSION`     | Platform version (e.g. `14.0`)                 |
+| `ANDROID_APP_PATH`    | Path to `.apk`                                 |
+| `IOS_DEVICE_NAME`     | Simulator name or real device name             |
+| `IOS_VERSION`         | iOS version (e.g. `18.0`)                      |
+| `IOS_APP_PATH`        | Path to `.app` or `.ipa`                       |
+| `IOS_UDID`            | Device UDID (real devices only)                |
+| `TEST_USER_EMAIL`     | Valid test account email                       |
+| `TEST_USER_PASSWORD`  | Valid test account password                    |
+| `LOG_LEVEL`           | Appium/WebdriverIO log level (`info`, `debug`) |
 
 ---
 
