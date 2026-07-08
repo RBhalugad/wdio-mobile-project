@@ -25,7 +25,7 @@ jobs:
             - name: Install Appium & drivers
               run: |
                   npm install -g appium
-                  appium driver install xcuitest
+                  appium driver install xcuitest --legacy-peer-deps
 
             - name: Select Xcode version
               uses: maxim-lobanov/setup-xcode@v1

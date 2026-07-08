@@ -12,7 +12,7 @@
         "allure:generate": "allure generate allure-results --clean -o allure-report",
         "allure:open": "allure open allure-report",
         "allure:report": "npm run allure:generate && npm run allure:open",
-        "appium:install:drivers": "appium driver install uiautomator2 && appium driver install xcuitest",
+        "appium:install:drivers": "appium driver install uiautomator2 --legacy-peer-deps && appium driver install xcuitest --legacy-peer-deps",
         "appium:list": "appium driver list",
         "typecheck": "tsc --noEmit",
         "format": "prettier --write \"**/*.{ts,js,json,yml,yaml,md}\"",
